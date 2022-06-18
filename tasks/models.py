@@ -14,8 +14,8 @@ class Task(models.Model):
                              null=True, blank=True)
     name = models.TextField(max_length=255)
     description = models.TextField(max_length=255, null = True)
-    createdAt = models.DateTimeFieldTextField(auto_now_add=True)
-    updatedAt = models.DateTimeFieldTextField(auto_now=True)
+    createdAt = models.DateTimeField(auto_now_add=True)
+    updatedAt = models.DateTimeField(auto_now=True)
     complete = models.BooleanField(default=False)
     category = models.ForeignKey(Category, 
                                    on_delete=models.CASCADE, 
