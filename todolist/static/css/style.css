@@ -1,0 +1,88 @@
+* {
+    font-size: 15px;
+    margin: 0px;
+    padding: 0px;
+    box-sizing: border-box;
+}
+
+
+/* About team */
+
+.main {
+    padding: 50px;
+}
+
+.top-main {
+    text-align: center;
+}
+
+.top-main h1 {
+    font-size: 3rem;
+}
+
+.center-main {
+    margin-top: 30px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.center-main .member {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.center-main .member img {
+    border-radius: 50%;
+}
+
+.center-main .member p {
+    font-size: 2rem;
+    text-align: center;
+}
+
+.center-main .member ul li {
+    list-style: none;
+    font-size: 1.5rem;
+}
+
+.center-main .member ul li a {
+    text-decoration: none;
+    color: black;
+}
+
+.center-main .member ul li a:hover {
+    opacity: 0.7;
+    cursor: pointer;
+}
+
+
+/* Login page, Register page */
+
+.login-form,
+.register-form {
+    border: 1px solid #f5f6fa;
+    border-radius: 10px;
+    padding: 20px;
+    width: 35%;
+    font-size: 1rem;
+    position: absolute;
+    transform: translate(-50%, -50%);
+    top: 50%;
+    left: 50%;
+}
+
+.login-form h2,
+.register-form h2 {
+    font-size: 3rem;
+}
+
+.login-form input,
+.register-form input {
+    margin-bottom: 10px;
+}
+
+
+/* List task page */
