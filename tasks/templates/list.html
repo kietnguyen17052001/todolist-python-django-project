@@ -1,18 +1,74 @@
 {%extends 'base.html'%} {%block body%}
 <div class="list-form">
-  <div class="right-content">
-    <div class="search-task">
-      <form>
-        <input
-          type="text"
-          name="keyword"
-          id="keyword"
-          value="{{keyword|default:''}}"
-        />
-      </form>
-    </div>
-    <div class="list-task"></div>
+  <div class="search-task">
+    <form>
+      <input
+        type="text"
+        name="keyword"
+        class="input-text-search"
+        id="keyword"
+        value="{{keyword|default:''}}"
+      />
+      <input type="submit" class="input-submit-search" value="Search" />
+    </form>
   </div>
-  <div class="left-content"></div>
+  <div class="main-list-task">
+    <div class="category-task">
+      <h2>Category</h2>
+      <div class="menu-category">
+        <ul>
+          <li>
+            <i class="fa fa-sun-o" aria-hidden="true"></i
+            ><a href="{% url 'tasks:list' 1 %}">My day</a>
+          </li>
+          <li>
+            <i class="fa fa-star" aria-hidden="true"></i
+            ><a href="{% url 'tasks:list' 2 %}">Important</a>
+          </li>
+          <li>
+            <i class="fa fa-tasks" aria-hidden="true"></i
+            ><a href="{% url 'tasks:list' 3 %}">Tasks</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="list-task">
+      <h2>List task</h2>
+      <div>
+        {% comment %}
+        <form method="post">
+          {% csrf_token %} {{ form.as_p }}
+          <input type="submit" class="input-submit-search" value="Add" />
+        </form>
+        {% endcomment %}
+        <div class="show-list">
+          {% for task in tasks%}
+          <div class="task">
+            <form method="post">
+              {% if task.complete %}
+              <input
+                class="task-status task-complete"
+                type="submit"
+                value="complete"
+              />
+              <p style="text-decoration-line: line-through">{{task.name}}</p>
+              {% else %}
+              <input
+                class="task-status task-incomplete"
+                type="submit"
+                value="incomplete"
+              />
+              <p>{{task.name}}</p>
+              {% endif %}
+            </form>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+    <div class="detail-task">
+      <h2>Detail task</h2>
+    </div>
+  </div>
 </div>
 {% endblock %}

@@ -86,3 +86,82 @@
 
 
 /* List task page */
+
+.list-form {
+    margin: 0 auto;
+    margin-top: 30px;
+    width: 90%;
+    border: 1px solid #f5f6fa;
+    border-radius: 10px;
+    padding: 20px;
+}
+
+.list-form .search-task form {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.list-form .search-task form input {
+    border-radius: 0;
+}
+
+.list-form .search-task form .input-text-search {
+    width: 300px;
+    border-bottom-left-radius: 4px;
+    border-top-left-radius: 4px;
+}
+
+.list-form .search-task form .input-submit-search {
+    border-bottom-right-radius: 4px;
+    border-top-right-radius: 4px;
+}
+
+.list-form .main-list-task {
+    display: flex;
+    width: 100%;
+}
+
+.list-form .main-list-task h2 {
+    margin-bottom: 25px;
+}
+
+.list-form .main-list-task .category-task {
+    width: 20%;
+    border-right: 2px solid #f5f6fa;
+}
+
+.list-form .main-list-task .category-task .menu-category ul {
+    padding-left: 0px;
+}
+
+.list-form .main-list-task .category-task .menu-category ul li {
+    list-style: none;
+}
+
+.list-form .main-list-task .category-task .menu-category ul li:hover {
+    opacity: 0.7;
+}
+
+.list-form .main-list-task .category-task .menu-category ul li a {
+    text-decoration: none;
+    margin-left: 15px;
+    color: black;
+}
+
+.list-form .main-list-task .list-task {
+    width: 60%;
+    padding-left: 15px;
+    border-right: 2px solid #f5f6fa;
+}
+
+.list-form .main-list-task .list-task .show-list .task form {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.list-form .main-list-task .detail-task {
+    padding-left: 15px;
+    width: 20%;
+}
