@@ -1,0 +1,62 @@
+body {
+    margin: 0px;
+    padding: 0px;
+    box-sizing: border-box;
+    font-size: 15px;
+}
+
+
+/* About team */
+
+.main {
+    padding: 50px;
+}
+
+.top-main {
+    text-align: center;
+}
+
+.top-main h1 {
+    font-size: 3rem;
+}
+
+.center-main {
+    margin-top: 30px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.center-main .member {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.center-main .member img {
+    border-radius: 50%;
+}
+
+.center-main .member p {
+    font-size: 1.5rem;
+    text-align: center;
+}
+
+.center-main .member ul li {
+    list-style: none;
+    font-size: 0.9rem;
+}
+
+.center-main .member ul li a {
+    text-decoration: none;
+    color: black;
+}
+
+.center-main .member ul li a:hover {
+    opacity: 0.7;
+    cursor: pointer;
+}
+
+
+/* Login page */
