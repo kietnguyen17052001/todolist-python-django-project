@@ -33,14 +33,26 @@
       </div>
     </div>
     <div class="list-task">
-      <h2>List task</h2>
+      <h2 style="display: inline-block">
+        List task: <b>{{tasks.count}} tasks</b>,
+        <b style="color: #2980b9">{{count_complete}} complete</b> and
+        <b style="color: #e74c3c">{{count_incomplete}} incomplete</b>
+      </h2>
+      <a
+        class="sort-task-by-name"
+        style="
+          text-decoration: none;
+          float: right;
+          margin-right: 20px;
+          color: #2980b9;
+          border: 2px solid #2980b9;
+          border-radius: 5px;
+          padding: 2px 5px 2px 5px;
+        "
+        href="#"
+        >Sort <i class="fa fa-sort-alpha-asc" aria-hidden="true"></i
+      ></a>
       <div>
-        {% comment %}
-        <form method="post">
-          {% csrf_token %} {{ form.as_p }}
-          <input type="submit" class="input-submit-search" value="Add" />
-        </form>
-        {% endcomment %}
         <div class="show-list">
           {% for task in tasks%}
           <div class="task">
@@ -51,14 +63,20 @@
                 type="submit"
                 value="complete"
               />
-              <p style="text-decoration-line: line-through">{{task.name}}</p>
+              <a
+                href="#"
+                style="text-decoration-line: line-through; color: black"
+                >{{task.name}}</a
+              >
               {% else %}
               <input
                 class="task-status task-incomplete"
                 type="submit"
                 value="incomplete"
               />
-              <p>{{task.name}}</p>
+              <a href="#" style="text-decoration: none; color: black"
+                >{{task.name}}</a
+              >
               {% endif %}
             </form>
           </div>
@@ -68,6 +86,39 @@
     </div>
     <div class="detail-task">
       <h2>Detail task</h2>
+      <div class="main-content"></div>
+      <div
+        class="submit-save-delete"
+        style="
+          display: flex;
+          align-items: center;
+          justify-content: flex-end;
+          gap: 1rem;
+        "
+      >
+        <a
+          href="#"
+          style="
+            text-decoration: none;
+            color: #2980b9;
+            border: 2px solid #2980b9;
+            border-radius: 5px;
+            padding: 2px 5px 2px 5px;
+          "
+          >Save <i class="fa fa-floppy-o" aria-hidden="true"></i
+        ></a>
+        <a
+          href="#"
+          style="
+            text-decoration: none;
+            color: #e74c3c;
+            border: 2px solid #e74c3c;
+            border-radius: 5px;
+            padding: 2px 5px 2px 5px;
+          "
+          >Delete <i class="fa fa-trash-o" aria-hidden="true"></i
+        ></a>
+      </div>
     </div>
   </div>
 </div>
