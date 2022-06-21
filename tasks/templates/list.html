@@ -1,4 +1,6 @@
-{%extends 'base.html'%} {%block body%}
+{%extends 'base.html'%} {%load static%} {%block css%}
+<link rel="stylesheet" href="{% static 'css/list.css' %}" /> {% endblock %}
+{%block body%}
 <div class="list-form">
   <div class="search-task">
     <form>
@@ -33,81 +35,60 @@
       </div>
     </div>
     <div class="list-task">
-      <h2 style="display: inline-block">
-        List task: <b>{{tasks.count}} tasks</b>,
+      <div class="list-task-top">
+        <h2 style="display: inline-block">
+        {% if category_id == 1 %}
+          My day:
+        {% elif category_id == 2 %}
+          Important:
+        {% else %}
+          Tasks:
+        {% endif %}
+        <b>{{tasks.count}} tasks</b>,
         <b style="color: #2980b9">{{count_complete}} complete</b> and
         <b style="color: #e74c3c">{{count_incomplete}} incomplete</b>
-      </h2>
-      <div style="
-        float: right;
-      ">
-        <select name="sort">
-          {% if typesort %}
-            {% if typesort == "0" %}
-            <option value=0 selected="selected">Defaul</option>
-            <option value=1>Sort by name</option>
-            <option value=2>Complete/Incomplete</option>
-            {%elif typesort == "1"%}
-            <option value=0>Defaul</option>
-            <option value=1 selected="selected">Sort by name</option>
-            <option value=2>Complete/Incomplete</option>
-            {%elif typesort == "2"%}
-            <option value=0>Defaul</option>
-            <option value=1>Sort by name</option>
-            <option value=2 selected="selected">Complete/Incomplete</option>
-            {%endif%}
-          {% else%}
-            <option value=0>Defaul</option>
-            <option value=1>Sort by name</option>
-            <option value=2>Complete/Incomplete</option>
-          {% endif %}
-          
-        </select>
-  
-        <input type="submit" value="Sort" style="margin-right: 20px;"/>
-      </form>
+        </h2>
+        <div>
+          <form>
+            <select class="selected-box-sort" name="sort">
+              {% if typesort %}
+                {% if typesort == "0" %}
+                <option value=0 selected="selected">Default</option>
+                <option value=1>Sort by name</option>
+                <option value=2>Complete/Incomplete</option>
+                {%elif typesort == "1"%}
+                <option value=0>Default</option>
+                <option value=1 selected="selected">Sort by name</option>
+                <option value=2>Complete/Incomplete</option>
+                {%elif typesort == "2"%}
+                <option value=0>Default</option>
+                <option value=1>Sort by name</option>
+                <option value=2 selected="selected">Complete/Incomplete</option>
+                {%endif%}
+              {% else%}
+                <option value=0>Default</option>
+                <option value=1>Sort by name</option>
+                <option value=2>Complete/Incomplete</option>
+              {% endif %}
+            </select>
+            <input class="sort-task-by-name" type="submit" value="Sort"/>
+          </form>
+        </div>
+      </div>
+      <div class="add-task">
+        <form action="{% url 'tasks:add_task' category_id %}" method = "post">{% csrf_token %}   
+            {{form}}
+          <input type="submit" class="input-submit-search" value="Add" />
+        </form>
       </div>
       <div>
         <div class="show-list">
           {% for task in tasks%}
           <div class="task">
-            <form method="post">
-              {% if task.complete %}
-              <a
-                href="/list/{{category_id}}/{{task.id}}/complete?keyword={{keyword}}&sort={{typesort}}"
-                style="border: 1px solid #bbbbbb;
-                color: #6c6666;
-                font-style: none;
-                text-decoration: none;
-                padding: 7px 24px;
-                min-width: 140px;
-                text-align: center;"
-                >COMPLETE</a 
-              >
-              <a
-                href="/list/{{category_id}}/{{task.id}}?keyword={{keyword}}&sort={{typesort}}"
-                style="text-decoration-line: line-through; color: black"
-                >{{task.name}}</a 
-              >
-              {% else %}
-              <a
-                href="/list/{{category_id}}/{{task.id}}/complete?keyword={{keyword}}&sort={{typesort}}"
-                style="border: 1px solid #bbbbbb;
-                color: #6c6666;
-                font-style: none;
-                text-decoration: none;
-                padding: 7px 24px;
-                min-width: 140px;
-                text-align: center;"
-                >INCOMPLETE</a 
-              >
-              <a
-              <a href="/list/{{category_id}}/{{task.id}}?keyword={{keyword}}&sort={{typesort}}"
-               style="text-decoration: none; color: black"
-                >{{task.name}}</a
-              >
-              {% endif %}
-            </form>
+            <a class="task-complete" style="color: {% if task.complete %}white{% else %}#2980b9{% endif %}; background-color: {% if task.complete %}#2980b9{% else %}white{% endif %}"href="/list/{{category_id}}/task/{{task.id}}/complete?keyword={{keyword}}&sort={{typesort}}">{% if task.complete %}COMPLETE{% else %}INCOMPLETE{% endif %}</a>
+            <a href="/list/{{category_id}}/task/{{task.id}}?keyword={{keyword}}&sort={{typesort}}"
+              style="text-decoration-line: {% if task.complete %}line-through{% else %}none{% endif %}; color: black"
+            >{{task.name}}</a>
           </div>
           {% endfor %}
         </div>
@@ -115,68 +96,43 @@
     </div>
     <div class="detail-task">
       <h2>Detail task</h2>
-      <div class="main-content"></div>
-      <div
-        class="submit-save-delete"
-        style="
-          display: flex;
-          align-items: center;
-          justify-content: space-around;
-          gap: 1rem;
-        "
-      >
-        <a
-          href="#"
-          style="
-            text-decoration: none;
-            color: #2980b9;
-            border: 2px solid #2980b9;
-            border-radius: 5px;
-            padding: 2px 5px 2px 5px;
-          "
-          >Save <i class="fa fa-floppy-o" aria-hidden="true"></i
-        ></a>
-        <a
-          href="#"
-          style="
-            text-decoration: none;
-            color: #e74c3c;
-            border: 2px solid #e74c3c;
-            border-radius: 5px;
-            padding: 2px 5px 2px 5px;
-          "
-          >Delete <i class="fa fa-trash-o" aria-hidden="true"></i
-        ></a>
-      </div>
       {%if task%}
-        <div class="detail" style="margin-top: 30px">
-          <h4>ID</h4>
-          <input type="text" name='id' value="{{task.id}}" style="margin-bottom: 16px; width: 100%;" readonly>
+        <form action="{% url 'tasks:update' category_id task.id  %}" method="post"> {% csrf_token %}  
+          <div class="detail" style="margin-top: 30px">
+            <h4>ID</h4>
+            <input type="text" name='id' value="{{task.id}}" style="margin-bottom: 16px; width: 100%;" disabled="disabled">
+  
+            <h4>Name</h4>
+            <input type="text" name='name' value="{{task.name}}" style="margin-bottom: 16px; width: 100%;">
+  
+            <div style="display: flex; justify-content: space-between;  margin-bottom: 16px; align-items: center;">
+              <h4 style="display: inline-block;">Completed</h4>
 
-          <h4>Name</h4>
-          <input type="text" name='id' value="{{task.name}}" style="margin-bottom: 16px; width: 100%;">
-
-          <div>
-            <h4>Completed</h4>
-            {%if task.complete%}
-            <input type="radio" name="iscomplete" id="complete" value="True" checked style="width: 20px; height: 20px;" checked>
-            <label for="complete">Complete</label>
-            <input type="radio" name="iscomplete" id="incomplete" value="False" style="width: 20px; height: 20px;">
-            <label for="incomplete">Incomplete</label>
-            {%else%}
-            <input type="radio" name="iscomplete" id="complete" value="True" checked style="width: 20px; height: 20px;">
-            <label for="complete">Complete</label>
-            <input type="radio" name="iscomplete" id="incomplete" value="False" style="width: 20px; height: 20px;"  checked>
-            <label for="incomplete">Incomplete</label>
-            {%endif%}
+              {%if task.complete%}
+                <input type="radio" name="iscomplete" id="complete" value="True" checked style="width: 20px; height: 20px;" checked>
+                <label for="complete">True</label>
+                <input type="radio" name="iscomplete" id="incomplete" value="False" style="width: 20px; height: 20px;">
+                <label for="incomplete">False</label>
+                {%else%}
+                <input type="radio" name="iscomplete" id="complete" value="True" checked style="width: 20px; height: 20px;">
+                <label for="complete">True</label>
+                <input type="radio" name="iscomplete" id="incomplete" value="False" style="width: 20px; height: 20px;"  checked>
+                <label for="incomplete">False</label>
+              {%endif%}
+            </div>
+            <h4>CreateAt</h4>
+            <input type="text" name='x' value="{{task.createdAt}}" style="margin-bottom: 16px; width: 100%;"  disabled="disabled">
+  
+            <h4>UpdateAt</h4>
+            <input type="text" name='x' value="{{task.updatedAt}}" style="margin-bottom: 16px; width: 100%;"  disabled="disabled">
           </div>
-
-          <h4>CreateAt</h4>
-          <input type="text" name='id' value="{{task.createdAt}}" style="margin-bottom: 16px; width: 100%;"  disabled="disabled">
-
-          <h4>UpdateAt</h4>
-          <input type="text" name='id' value="{{task.updatedAt}}" style="margin-bottom: 16px; width: 100%;"  disabled="disabled">
-        </div>
+          <div>
+            <div class="submit-save-delete">
+              <button class="submit-save">Save <i class="fa fa-floppy-o" aria-hidden="true"></i></button>
+              <a class="submit-delete" href="{% url 'tasks:delete' category_id task.id  %}">Delete <i class="fa fa-trash-o" aria-hidden="true"></i></a>
+            </div>
+          </div>
+        </form>
       {%endif%}
     </div>
   </div>
