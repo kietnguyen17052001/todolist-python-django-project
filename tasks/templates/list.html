@@ -45,7 +45,8 @@
           Tasks:
         {% endif %}
         <b>{{tasks.count}} tasks</b>,
-        <b style="color: #2980b9">{{count_complete}} complete</b> and
+        <b style="color: #2980b9">{{count_complete}} complete</b>
+        <b> and</b>
         <b style="color: #e74c3c">{{count_incomplete}} incomplete</b>
         </h2>
         <div>
@@ -85,10 +86,16 @@
         <div class="show-list">
           {% for task in tasks%}
           <div class="task">
-            <a class="task-complete" style="color: {% if task.complete %}white{% else %}#2980b9{% endif %}; background-color: {% if task.complete %}#2980b9{% else %}white{% endif %}"href="/list/{{category_id}}/task/{{task.id}}/complete?keyword={{keyword}}&sort={{typesort}}">{% if task.complete %}COMPLETE{% else %}INCOMPLETE{% endif %}</a>
+            <a class="task-complete" style="width: 25px; height: 25px; border-radius: 50%; color: {% if task.complete %}white{% else %}#2980b9{% endif %}; background-color: {% if task.complete %}#2980b9{% else %}white{% endif %}"href="/list/{{category_id}}/task/{{task.id}}/complete?keyword={{keyword}}&sort={{typesort}}"><i class="fa fa-check" aria-hidden="true"></i></a>
             <a href="/list/{{category_id}}/task/{{task.id}}?keyword={{keyword}}&sort={{typesort}}"
               style="text-decoration-line: {% if task.complete %}line-through{% else %}none{% endif %}; color: black"
             >{{task.name}}</a>
+           {% if category_id == 3 %}
+            <a href="#" style="color:black">{% if task.category_id == 1 %}
+            <i class="fa fa-sun-o" aria-hidden="true"></i>
+            {% elif task.category_id == 2 %}
+            <i class="fa fa-star" aria-hidden="true"></i>
+            {% endif %}</a>{% endif %}
           </div>
           {% endfor %}
         </div>

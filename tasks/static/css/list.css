@@ -113,8 +113,13 @@
 .list-form .main-list-task .list-task .show-list .task {
     display: flex;
     align-items: center;
-    gap: 5px;
-    margin-bottom: 10px;
+    gap: 20px;
+    border-bottom: 2px solid #ecf0f1;
+    padding: 10px;
+}
+
+.list-form .main-list-task .list-task .show-list .task a:nth-child(2) {
+    width: 80%;
 }
 
 .list-form .main-list-task .detail-task {
