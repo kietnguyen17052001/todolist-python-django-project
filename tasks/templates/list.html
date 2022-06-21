@@ -35,39 +35,45 @@
       </div>
     </div>
     <div class="list-task">
-      <h2 style="display: inline-block">
-        List task: <b>{{tasks.count}} tasks</b>,
+      <div class="list-task-top">
+        <h2 style="display: inline-block">
+        {% if category_id == 1 %}
+          My day:
+        {% elif category_id == 2 %}
+          Important:
+        {% else %}
+          Tasks:
+        {% endif %}
+        <b>{{tasks.count}} tasks</b>,
         <b style="color: #2980b9">{{count_complete}} complete</b> and
         <b style="color: #e74c3c">{{count_incomplete}} incomplete</b>
-      </h2>
-      <div style="
-        float: right;
-      ">
-        <select class="selected-box-sort" name="sort">
-          {% if typesort %}
-            {% if typesort == "0" %}
-            <option value=0 selected="selected">Default</option>
-            <option value=1>Sort by name</option>
-            <option value=2>Complete/Incomplete</option>
-            {%elif typesort == "1"%}
-            <option value=0>Default</option>
-            <option value=1 selected="selected">Sort by name</option>
-            <option value=2>Complete/Incomplete</option>
-            {%elif typesort == "2"%}
-            <option value=0>Default</option>
-            <option value=1>Sort by name</option>
-            <option value=2 selected="selected">Complete/Incomplete</option>
-            {%endif%}
-          {% else%}
-            <option value=0>Default</option>
-            <option value=1>Sort by name</option>
-            <option value=2>Complete/Incomplete</option>
-          {% endif %}
-          
-        </select>
-  
-        <input class="sort-task-by-name" type="submit" value="Sort"/>
-      </form>
+        </h2>
+        <div>
+          <form>
+            <select class="selected-box-sort" name="sort">
+              {% if typesort %}
+                {% if typesort == "0" %}
+                <option value=0 selected="selected">Default</option>
+                <option value=1>Sort by name</option>
+                <option value=2>Complete/Incomplete</option>
+                {%elif typesort == "1"%}
+                <option value=0>Default</option>
+                <option value=1 selected="selected">Sort by name</option>
+                <option value=2>Complete/Incomplete</option>
+                {%elif typesort == "2"%}
+                <option value=0>Default</option>
+                <option value=1>Sort by name</option>
+                <option value=2 selected="selected">Complete/Incomplete</option>
+                {%endif%}
+              {% else%}
+                <option value=0>Default</option>
+                <option value=1>Sort by name</option>
+                <option value=2>Complete/Incomplete</option>
+              {% endif %}
+            </select>
+            <input class="sort-task-by-name" type="submit" value="Sort"/>
+          </form>
+        </div>
       </div>
       <div class="add-task">
         <form action="{% url 'tasks:add_task' category_id %}" method = "post">{% csrf_token %}   
@@ -104,14 +110,14 @@
 
               {%if task.complete%}
                 <input type="radio" name="iscomplete" id="complete" value="True" checked style="width: 20px; height: 20px;" checked>
-                <label for="complete">Complete</label>
+                <label for="complete">True</label>
                 <input type="radio" name="iscomplete" id="incomplete" value="False" style="width: 20px; height: 20px;">
-                <label for="incomplete">Incomplete</label>
+                <label for="incomplete">False</label>
                 {%else%}
                 <input type="radio" name="iscomplete" id="complete" value="True" checked style="width: 20px; height: 20px;">
-                <label for="complete">Complete</label>
+                <label for="complete">True</label>
                 <input type="radio" name="iscomplete" id="incomplete" value="False" style="width: 20px; height: 20px;"  checked>
-                <label for="incomplete">Incomplete</label>
+                <label for="incomplete">False</label>
               {%endif%}
             </div>
             <h4>CreateAt</h4>
@@ -121,17 +127,10 @@
             <input type="text" name='x' value="{{task.updatedAt}}" style="margin-bottom: 16px; width: 100%;"  disabled="disabled">
           </div>
           <div>
-            <div
-          class="submit-save-delete"
-        >
-          <button class="submit-save"
-
-            >Save <i class="fa fa-floppy-o" aria-hidden="true"></i
-          ></button>
-          <a class="submit-delete" href="{% url 'tasks:delete' category_id task.id  %}"
-            >Delete <i class="fa fa-trash-o" aria-hidden="true"></i
-          ></a>
-        </div>
+            <div class="submit-save-delete">
+              <button class="submit-save">Save <i class="fa fa-floppy-o" aria-hidden="true"></i></button>
+              <a class="submit-delete" href="{% url 'tasks:delete' category_id task.id  %}">Delete <i class="fa fa-trash-o" aria-hidden="true"></i></a>
+            </div>
           </div>
         </form>
       {%endif%}
