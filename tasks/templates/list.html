@@ -1,4 +1,6 @@
-{%extends 'base.html'%} {%block body%}
+{%extends 'base.html'%} {%load static%} {%block css%}
+<link rel="stylesheet" href="{% static 'css/list.css' %}" /> {% endblock %}
+{%block body%}
 <div class="list-form">
   <div class="search-task">
     <form>
@@ -41,72 +43,40 @@
       <div style="
         float: right;
       ">
-        <select name="sort">
+        <select class="selected-box-sort" name="sort">
           {% if typesort %}
             {% if typesort == "0" %}
-            <option value=0 selected="selected">Defaul</option>
+            <option value=0 selected="selected">Default</option>
             <option value=1>Sort by name</option>
             <option value=2>Complete/Incomplete</option>
             {%elif typesort == "1"%}
-            <option value=0>Defaul</option>
+            <option value=0>Default</option>
             <option value=1 selected="selected">Sort by name</option>
             <option value=2>Complete/Incomplete</option>
             {%elif typesort == "2"%}
-            <option value=0>Defaul</option>
+            <option value=0>Default</option>
             <option value=1>Sort by name</option>
             <option value=2 selected="selected">Complete/Incomplete</option>
             {%endif%}
           {% else%}
-            <option value=0>Defaul</option>
+            <option value=0>Default</option>
             <option value=1>Sort by name</option>
             <option value=2>Complete/Incomplete</option>
           {% endif %}
           
         </select>
   
-        <input type="submit" value="Sort" style="margin-right: 20px;"/>
+        <input class="sort-task-by-name" type="submit" value="Sort"/>
       </form>
       </div>
       <div>
         <div class="show-list">
           {% for task in tasks%}
           <div class="task">
-            <form method="post">
-              {% if task.complete %}
-              <a
-                href="/list/{{category_id}}/{{task.id}}/complete?{{keyword}}&{{typesort}}"
-                style="border: 1px solid #bbbbbb;
-                color: #6c6666;
-                font-style: none;
-                text-decoration: none;
-                padding: 7px 24px;
-                min-width: 140px;
-                text-align: center;"
-                >COMPLETE</a 
-              >
-              <a
-                href="/list/{{category_id}}/{{task.id}}"
-                style="text-decoration-line: line-through; color: black"
-                >{{task.name}}</a 
-              >
-              {% else %}
-              <a
-                href="/list/{{category_id}}/{{task.id}}/complete?{{keyword}}&{{typesort}}"
-                style="border: 1px solid #bbbbbb;
-                color: #6c6666;
-                font-style: none;
-                text-decoration: none;
-                padding: 7px 24px;
-                min-width: 140px;
-                text-align: center;"
-                >INCOMPLETE</a 
-              >
-              <a
-              <a href="/list/{{category_id}}/{{task.id}}" style="text-decoration: none; color: black"
-                >{{task.name}}</a
-              >
-              {% endif %}
-            </form>
+            <a class="task-complete" style="color: {% if task.complete %}white{% else %}#2980b9{% endif %}; background-color: {% if task.complete %}#2980b9{% else %}white{% endif %}"href="/list/{{category_id}}/task/{{task.id}}/complete?{{keyword}}&{{typesort}}">{% if task.complete %}COMPLETE{% else %}INCOMPLETE{% endif %}</a>
+            <a href="/list/{{category_id}}/task/{{task.id}}"
+              style="text-decoration-line: {% if task.complete %}line-through{% else %}none{% endif %}; color: black"
+            >{{task.name}}</a>
           </div>
           {% endfor %}
         </div>
@@ -114,39 +84,6 @@
     </div>
     <div class="detail-task">
       <h2>Detail task</h2>
-      <div class="main-content"></div>
-      <div
-        class="submit-save-delete"
-        style="
-          display: flex;
-          align-items: center;
-          justify-content: space-around;
-          gap: 1rem;
-        "
-      >
-        <a
-          href="#"
-          style="
-            text-decoration: none;
-            color: #2980b9;
-            border: 2px solid #2980b9;
-            border-radius: 5px;
-            padding: 2px 5px 2px 5px;
-          "
-          >Save <i class="fa fa-floppy-o" aria-hidden="true"></i
-        ></a>
-        <a
-          href="#"
-          style="
-            text-decoration: none;
-            color: #e74c3c;
-            border: 2px solid #e74c3c;
-            border-radius: 5px;
-            padding: 2px 5px 2px 5px;
-          "
-          >Delete <i class="fa fa-trash-o" aria-hidden="true"></i
-        ></a>
-      </div>
       {%if task%}
         <div class="detail" style="margin-top: 30px">
           <h4>ID</h4>
@@ -163,12 +100,24 @@
             <input type="checkbox" name="iscomplete" value="{{task.complete}}" style="width: 20px; height: 20px;">
             {%endif%}
           </div>
-
           <h4>CreateAt</h4>
           <input type="text" name='id' value="{{task.createdAt}}" style="margin-bottom: 16px; width: 100%;"  disabled="disabled">
 
           <h4>UpdateAt</h4>
           <input type="text" name='id' value="{{task.updatedAt}}" style="margin-bottom: 16px; width: 100%;"  disabled="disabled">
+        </div>
+        <div>
+          <div
+        class="submit-save-delete"
+      >
+        <a class="submit-save"
+          href="#"
+          >Save <i class="fa fa-floppy-o" aria-hidden="true"></i
+        ></a>
+        <a class="submit-delete" href="#"
+          >Delete <i class="fa fa-trash-o" aria-hidden="true"></i
+        ></a>
+      </div>
         </div>
       {%endif%}
     </div>
