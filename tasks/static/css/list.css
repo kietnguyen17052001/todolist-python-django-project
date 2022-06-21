@@ -1,0 +1,126 @@
+.list-form {
+    margin: 0 auto;
+    margin-top: 30px;
+    width: 90%;
+    border: 1px solid #f5f6fa;
+    border-radius: 10px;
+    padding: 20px;
+}
+
+.list-form .search-task form {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.list-form .search-task form input {
+    border-radius: 0;
+}
+
+.list-form .search-task form .input-text-search {
+    width: 300px;
+    border-bottom-left-radius: 4px;
+    border-top-left-radius: 4px;
+}
+
+.list-form .search-task form .input-submit-search {
+    border-bottom-right-radius: 4px;
+    border-top-right-radius: 4px;
+}
+
+.list-form .main-list-task {
+    display: flex;
+    width: 100%;
+}
+
+.list-form .main-list-task h2 {
+    margin-bottom: 25px;
+}
+
+.list-form .main-list-task .category-task {
+    width: 20%;
+    border-right: 2px solid #f5f6fa;
+}
+
+.list-form .main-list-task .category-task .menu-category ul {
+    padding-left: 0px;
+}
+
+.list-form .main-list-task .category-task .menu-category ul li {
+    list-style: none;
+}
+
+.list-form .main-list-task .category-task .menu-category ul li:hover {
+    opacity: 0.7;
+}
+
+.list-form .main-list-task .category-task .menu-category ul li a {
+    text-decoration: none;
+    margin-left: 15px;
+    color: black;
+}
+
+.list-form .main-list-task .list-task {
+    width: 60%;
+    padding-left: 15px;
+    border-right: 2px solid #f5f6fa;
+}
+
+.list-form .main-list-task .list-task .show-list .task {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    margin-bottom: 10px;
+}
+
+.list-form .main-list-task .detail-task {
+    padding-left: 15px;
+    width: 20%;
+}
+
+.main-list-task a {
+    text-decoration: none;
+}
+
+.task-complete {
+    border: 1px solid #2980b9;
+    border-radius: 5px;
+    padding: 4px;
+    width: 80px;
+    font-size: 1.3rem;
+    text-align: center;
+}
+
+.task-complete:hover {
+    opacity: 0.8;
+}
+
+.sort-task-by-name,
+.submit-save,
+.submit-delete {
+    border-radius: 5px;
+    padding: 2px 5px 2px 5px;
+}
+
+.sort-task-by-name,
+.submit-save {
+    color: #2980b9;
+    border: 2px solid #2980b9;
+}
+
+.submit-delete {
+    color: #e74c3c;
+    border: 2px solid #e74c3c;
+}
+
+.sort-task-by-name {
+    float: right;
+    margin-right: 20px;
+}
+
+.submit-save-delete {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 1rem;
+}
