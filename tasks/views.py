@@ -5,24 +5,6 @@ from .models import Task, Category
 from .forms import TaskForm
 def index_view(request):
     return render(request, "index.html", {})
-
-def get_list(request, category_id):
-    keyword = request.GET.get('keyword')
-    sort = request.GET.get('sort')
-    user = request.user if request.user.is_authenticated else None
-    tasks = Task.objects.all()
-    if keyword:
-        tasks = tasks.filter(name__icontains = keyword)
-    if category_id != 3:
-        tasks = tasks.filter(category__id = category_id)
-        if category_id == 1:
-            dt = datetime.datetime.today()
-            tasks = tasks.filter(createdAt__contains = datetime.date(dt.year, dt.month, dt.day))
-    tasks = tasks.filter(user=user)
-    if sort=="1":
-        tasks = tasks.order_by('name').values()
-    if sort=="2":
-        tasks = tasks.order_by('complete').values()
         
 def list_view(request, category_id):
     keyword = request.GET.get('keyword')
@@ -34,7 +16,7 @@ def list_view(request, category_id):
     if category_id != 3:
         tasks = tasks.filter(category__id = category_id)
         if category_id == 1:
-            dt = datetime.datetime.today()
+            dt =  datetime.datetime.now() - datetime.timedelta(hours = 7)
             tasks = tasks.filter(createdAt__contains = datetime.date(dt.year, dt.month, dt.day))
     tasks = tasks.filter(user=user)
     if sort=="1":
@@ -87,7 +69,7 @@ def detail_view(request, category_id, task_id):
     if category_id != 3:
         tasks = tasks.filter(category__id = category_id)
         if category_id == 1:
-            dt = datetime.datetime.now()
+            dt =  datetime.datetime.now() - datetime.timedelta(hours = 7)
             tasks = tasks.filter(createdAt__contains = datetime.date(dt.year, dt.month, dt.day))
     tasks = tasks.filter(user=user)
     if sort=="1":
