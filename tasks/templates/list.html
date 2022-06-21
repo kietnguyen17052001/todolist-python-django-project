@@ -69,6 +69,12 @@
         <input class="sort-task-by-name" type="submit" value="Sort"/>
       </form>
       </div>
+      <div class="add-task">
+        <form action="{% url 'tasks:add_task' category_id %}" method = "post">{% csrf_token %}   
+            {{form}}
+          <input type="submit" class="input-submit-search" value="Add" />
+        </form>
+      </div>
       <div>
         <div class="show-list">
           {% for task in tasks%}
@@ -85,40 +91,49 @@
     <div class="detail-task">
       <h2>Detail task</h2>
       {%if task%}
-        <div class="detail" style="margin-top: 30px">
-          <h4>ID</h4>
-          <input type="text" name='id' value="{{task.id}}" style="margin-bottom: 16px; width: 100%;" disabled="disabled">
+        <form action="{% url 'tasks:update' category_id task.id  %}" method="post"> {% csrf_token %}  
+          <div class="detail" style="margin-top: 30px">
+            <h4>ID</h4>
+            <input type="text" name='id' value="{{task.id}}" style="margin-bottom: 16px; width: 100%;" disabled="disabled">
+  
+            <h4>Name</h4>
+            <input type="text" name='name' value="{{task.name}}" style="margin-bottom: 16px; width: 100%;">
+  
+            <div style="display: flex; justify-content: space-between;  margin-bottom: 16px; align-items: center;">
+              <h4 style="display: inline-block;">Completed</h4>
 
-          <h4>Name</h4>
-          <input type="text" name='id' value="{{task.name}}" style="margin-bottom: 16px; width: 100%;">
-
-          <div style="display: flex; justify-content: space-between;  margin-bottom: 16px; align-items: center;">
-            <h4 style="display: inline-block;">Completed</h4>
-            {%if task.complete%}
-            <input type="checkbox" name="iscomplete" value="{{task.complete}}" checked style="width: 20px; height: 20px;">
-            {%else%}
-            <input type="checkbox" name="iscomplete" value="{{task.complete}}" style="width: 20px; height: 20px;">
-            {%endif%}
+              {%if task.complete%}
+                <input type="radio" name="iscomplete" id="complete" value="True" checked style="width: 20px; height: 20px;" checked>
+                <label for="complete">Complete</label>
+                <input type="radio" name="iscomplete" id="incomplete" value="False" style="width: 20px; height: 20px;">
+                <label for="incomplete">Incomplete</label>
+                {%else%}
+                <input type="radio" name="iscomplete" id="complete" value="True" checked style="width: 20px; height: 20px;">
+                <label for="complete">Complete</label>
+                <input type="radio" name="iscomplete" id="incomplete" value="False" style="width: 20px; height: 20px;"  checked>
+                <label for="incomplete">Incomplete</label>
+              {%endif%}
+            </div>
+            <h4>CreateAt</h4>
+            <input type="text" name='x' value="{{task.createdAt}}" style="margin-bottom: 16px; width: 100%;"  disabled="disabled">
+  
+            <h4>UpdateAt</h4>
+            <input type="text" name='x' value="{{task.updatedAt}}" style="margin-bottom: 16px; width: 100%;"  disabled="disabled">
           </div>
-          <h4>CreateAt</h4>
-          <input type="text" name='id' value="{{task.createdAt}}" style="margin-bottom: 16px; width: 100%;"  disabled="disabled">
+          <div>
+            <div
+          class="submit-save-delete"
+        >
+          <button class="submit-save"
 
-          <h4>UpdateAt</h4>
-          <input type="text" name='id' value="{{task.updatedAt}}" style="margin-bottom: 16px; width: 100%;"  disabled="disabled">
+            >Save <i class="fa fa-floppy-o" aria-hidden="true"></i
+          ></button>
+          <a class="submit-delete" href="{% url 'tasks:delete' category_id task.id  %}"
+            >Delete <i class="fa fa-trash-o" aria-hidden="true"></i
+          ></a>
         </div>
-        <div>
-          <div
-        class="submit-save-delete"
-      >
-        <a class="submit-save"
-          href="#"
-          >Save <i class="fa fa-floppy-o" aria-hidden="true"></i
-        ></a>
-        <a class="submit-delete" href="#"
-          >Delete <i class="fa fa-trash-o" aria-hidden="true"></i
-        ></a>
-      </div>
-        </div>
+          </div>
+        </form>
       {%endif%}
     </div>
   </div>
