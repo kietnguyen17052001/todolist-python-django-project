@@ -15,15 +15,16 @@
     {% load static %}
     <!-- CSS
   –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+
     <link
-      rel="stylesheet"
-      type="text/css"
-      href="https://cdnjs.cloudflare.com/ajax/libs/normalize/3.0.2/normalize.min.css"
+    rel="stylesheet"
+    type="text/css"
+    href="https://cdnjs.cloudflare.com/ajax/libs/skeleton/2.0.4/skeleton.min.css"
     />
     <link
       rel="stylesheet"
       type="text/css"
-      href="https://cdnjs.cloudflare.com/ajax/libs/skeleton/2.0.4/skeleton.min.css"
+      href="https://cdnjs.cloudflare.com/ajax/libs/normalize/3.0.2/normalize.min.css"
     />
     <link
       rel="stylesheet"
@@ -44,7 +45,6 @@
   </head>
 
   <body>
-    <h1>Python django project Todolist</h1>
     <nav
       class="navbar navbar-expand-lg navbar-light bg-light"
       style="font-size: 15px"
@@ -82,7 +82,7 @@
               <a
                 class="nav-link active"
                 aria-current="page"
-                href="{% url 'tasks:list' 3 %}"
+                href="{% url 'tasks:list' 1 %}"
                 >Tasks</a
               >
             </li>
