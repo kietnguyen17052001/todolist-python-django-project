@@ -57,13 +57,19 @@ def list_view(request, category_id):
     
 
 def add_task(request,category_id):
+    keyword = request.GET.get('keyword')
+    sort = request.GET.get('sort')
+    if keyword == "None":
+        keyword = ''
+    if sort == "None":
+        sort = ''
     if request.method == "POST":
         form = TaskForm(request.POST)
         if form.is_valid():
             user = request.user if request.user.is_authenticated else None
             task = Task(name=request.POST["name"], user=user,category=Category.objects.get(id=category_id))
             task.save()
-            return redirect("tasks:list", category_id=category_id)
+            return redirect(f"/list/{category_id}?keyword={keyword}&sort={sort}")
 
     return redirect("tasks:index")    
 def detail_view(request, category_id, task_id):
@@ -118,6 +124,8 @@ def complete_view(request, category_id, task_id):
 
 def update_view(request, category_id, task_id):
     task = get_object_or_404(Task, id=task_id)
+    sort = request.GET.get('sort')
+    keyword = request.GET.get('keyword')
     if request.method == "POST":
         task.name=request.POST["name"]
         try:
@@ -125,9 +133,11 @@ def update_view(request, category_id, task_id):
         except KeyError:
             task.complete=False
         task.save()
-        return redirect("tasks:list", category_id=category_id)
+        return redirect(f"/list/{category_id}?keyword={keyword}&sort={sort}")
     
-def delete_view(request, category_id, task_id):
+def delete_view(request,category_id,task_id):
+    sort = request.GET.get('sort')
+    keyword = request.GET.get('keyword')
     task = get_object_or_404(Task, id=task_id)
     task.delete()
-    return redirect("tasks:list", category_id=category_id)
+    return redirect(f"/list/{category_id}?keyword={keyword}&sort={sort}")
