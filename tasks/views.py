@@ -18,11 +18,19 @@ def list_view(request, category_id):
     count_incomplete = tasks.filter(complete = False).count()
     context = {
         'keyword': keyword,
+        'category_id': category_id,
         'tasks': tasks,
         'count_complete': count_complete,
         'count_incomplete': count_incomplete,
     }
     return render(request, "list.html", context)
+
+def update_view(request, category_id, task_id):
+    task = Task.objects.get(id=task_id)
+    task.complete = not task.complete
+    task.save()
+    return list_view(request, category_id)
+    
 
 
 
