@@ -15,9 +15,8 @@ def list_view(request, category_id):
         tasks = tasks.filter(name__icontains = keyword)
     if category_id != 3:
         tasks = tasks.filter(category__id = category_id)
-        if category_id == 1:
-            dt =  datetime.datetime.now() - datetime.timedelta(hours = 7)
-            tasks = tasks.filter(createdAt__contains = datetime.date(dt.year, dt.month, dt.day))
+        dt = datetime.datetime.today()
+        tasks = tasks.filter(createdAt__contains = datetime.date(dt.year, dt.month, dt.day))
     tasks = tasks.filter(user=user)
     if sort=="1":
         tasks = tasks.order_by('name').values()
@@ -50,6 +49,9 @@ def add_task(request,category_id):
         if form.is_valid():
             user = request.user if request.user.is_authenticated else None
             task = Task(name=request.POST["name"], user=user,category=Category.objects.get(id=category_id))
+            now = datetime.datetime.now()
+            task.createdAt = now
+            task.updatedAt = now
             task.save()
             return redirect(f"/list/{category_id}?keyword={keyword}&sort={sort}")
 
@@ -68,9 +70,8 @@ def detail_view(request, category_id, task_id):
         tasks = Task.objects.filter(name__icontains = keyword)
     if category_id != 3:
         tasks = tasks.filter(category__id = category_id)
-        if category_id == 1:
-            dt =  datetime.datetime.now() - datetime.timedelta(hours = 7)
-            tasks = tasks.filter(createdAt__contains = datetime.date(dt.year, dt.month, dt.day))
+        dt = datetime.datetime.today()
+        tasks = tasks.filter(createdAt__contains = datetime.date(dt.year, dt.month, dt.day))    
     tasks = tasks.filter(user=user)
     if sort=="1":
         tasks = tasks.order_by('name').values()
@@ -114,6 +115,7 @@ def update_view(request, category_id, task_id):
             task.complete=request.POST["iscomplete"]
         except KeyError:
             task.complete=False
+        task.updatedAt = datetime.datetime.now()
         task.save()
         return redirect(f"/list/{category_id}?keyword={keyword}&sort={sort}")
     
