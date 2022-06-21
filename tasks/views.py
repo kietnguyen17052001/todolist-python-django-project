@@ -6,6 +6,24 @@ from .forms import TaskForm
 def index_view(request):
     return render(request, "index.html", {})
 
+def get_list(request, category_id):
+    keyword = request.GET.get('keyword')
+    sort = request.GET.get('sort')
+    user = request.user if request.user.is_authenticated else None
+    tasks = Task.objects.all()
+    if keyword:
+        tasks = tasks.filter(name__icontains = keyword)
+    if category_id != 3:
+        tasks = tasks.filter(category__id = category_id)
+        if category_id == 1:
+            dt = datetime.datetime.today()
+            tasks = tasks.filter(createdAt__contains = datetime.date(dt.year, dt.month, dt.day))
+    tasks = tasks.filter(user=user)
+    if sort=="1":
+        tasks = tasks.order_by('name').values()
+    if sort=="2":
+        tasks = tasks.order_by('complete').values()
+        
 def list_view(request, category_id):
     keyword = request.GET.get('keyword')
     sort = request.GET.get('sort')
@@ -98,7 +116,7 @@ def complete_view(request, category_id, task_id):
     return redirect(f"/list/{category_id}?keyword={keyword}&sort={sort}")
 
 
-def update_view(request,category_id, task_id):
+def update_view(request, category_id, task_id):
     task = get_object_or_404(Task, id=task_id)
     if request.method == "POST":
         task.name=request.POST["name"]
@@ -108,7 +126,8 @@ def update_view(request,category_id, task_id):
             task.complete=False
         task.save()
         return redirect("tasks:list", category_id=category_id)
-def delete_view(request,category_id,task_id):
+    
+def delete_view(request, category_id, task_id):
     task = get_object_or_404(Task, id=task_id)
     task.delete()
     return redirect("tasks:list", category_id=category_id)
