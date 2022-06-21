@@ -64,7 +64,6 @@
 .list-form .main-list-task .category-task .menu-category ul li {
     list-style: none;
     margin-bottom: 0px;
-    padding: 7px;
 }
 
 .list-form .main-list-task .category-task .menu-category ul li:hover {
@@ -74,9 +73,12 @@
 }
 
 .list-form .main-list-task .category-task .menu-category ul li a {
+    width: 80%;
     text-decoration: none;
     margin-left: 15px;
     color: black;
+    display: inline-block;
+    padding: 8px 0px;
 }
 
 .list-form .main-list-task .list-task {

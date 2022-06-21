@@ -76,7 +76,7 @@
         </div>
       </div>
       <div class="add-task">
-        <form action="{% url 'tasks:add_task' category_id %}" method = "post">{% csrf_token %}   
+        <form action="/list/{{category_id}}/task/add?keyword={{keyword}}&sort={{typesort}}" method = "post">{% csrf_token %}   
             {{form}}
           <input type="submit" class="input-submit-search" value="Add" />
         </form>
@@ -97,7 +97,7 @@
     <div class="detail-task">
       <h2>Detail task</h2>
       {%if task%}
-        <form action="{% url 'tasks:update' category_id task.id  %}" method="post"> {% csrf_token %}  
+        <form action="/list/{{category_id}}/task/{{task.id}}/update?keyword={{keyword}}&sort={{typesort}}" method="post"> {% csrf_token %}  
           <div class="detail" style="margin-top: 30px">
             <h4>ID</h4>
             <input type="text" name='id' value="{{task.id}}" style="margin-bottom: 16px; width: 100%;" disabled="disabled">
@@ -105,19 +105,31 @@
             <h4>Name</h4>
             <input type="text" name='name' value="{{task.name}}" style="margin-bottom: 16px; width: 100%;">
   
-            <div style="display: flex; justify-content: space-between;  margin-bottom: 16px; align-items: center;">
-              <h4 style="display: inline-block;">Completed</h4>
+            <div>
+              <h4 style="display: block;">Completed</h4>
 
               {%if task.complete%}
-                <input type="radio" name="iscomplete" id="complete" value="True" checked style="width: 20px; height: 20px;" checked>
-                <label for="complete">True</label>
-                <input type="radio" name="iscomplete" id="incomplete" value="False" style="width: 20px; height: 20px;">
-                <label for="incomplete">False</label>
+              <div style="display: flex; justify-content: space-between;  margin-bottom: 16px; align-items: center;">
+                <div style="display: flex; align-items: center;">
+                  <input type="radio" name="iscomplete" id="complete" value="True" checked style="width: 20px; height: 20px; margin-right: 8px;" checked>
+                  <label for="complete">Complete</label>
+                </div>
+                <div style="display: flex; align-items: center;">
+                  <input type="radio" name="iscomplete" id="incomplete" value="False" style="width: 20px; height: 20px; margin-right: 8px;">
+                  <label for="incomplete">Incomplete</label>
+                </div>
+              </div>
                 {%else%}
-                <input type="radio" name="iscomplete" id="complete" value="True" checked style="width: 20px; height: 20px;">
-                <label for="complete">True</label>
-                <input type="radio" name="iscomplete" id="incomplete" value="False" style="width: 20px; height: 20px;"  checked>
-                <label for="incomplete">False</label>
+              <div style="display: flex; justify-content: space-between;  margin-bottom: 16px; align-items: center;">
+                <div style="display: flex; align-items: center;">
+                  <input type="radio" name="iscomplete" id="complete" value="True" style="width: 20px; height: 20px; margin-right: 8px;" checked>
+                  <label for="complete">Complete</label>
+                </div>
+                <div style="display: flex; align-items: center;">
+                  <input type="radio" name="iscomplete" id="incomplete" value="False" checked style="width: 20px; height: 20px; margin-right: 8px;">
+                  <label for="incomplete">Incomplete</label>
+                </div>
+              </div>
               {%endif%}
             </div>
             <h4>CreateAt</h4>
@@ -129,7 +141,7 @@
           <div>
             <div class="submit-save-delete">
               <button class="submit-save">Save <i class="fa fa-floppy-o" aria-hidden="true"></i></button>
-              <a class="submit-delete" href="{% url 'tasks:delete' category_id task.id  %}">Delete <i class="fa fa-trash-o" aria-hidden="true"></i></a>
+              <a class="submit-delete" href="/list/{{category_id}}/task/{{task.id}}/delete?keyword={{keyword}}&sort={{typesort}}">Delete <i class="fa fa-trash-o" aria-hidden="true"></i></a>
             </div>
           </div>
         </form>
