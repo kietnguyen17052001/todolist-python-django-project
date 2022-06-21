@@ -132,3 +132,7 @@
     justify-content: flex-end;
     gap: 1rem;
 }
+
+.submit-save-delete:hover {
+    opacity: 0.8;
+}

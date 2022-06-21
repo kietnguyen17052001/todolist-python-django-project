@@ -73,8 +73,8 @@
         <div class="show-list">
           {% for task in tasks%}
           <div class="task">
-            <a class="task-complete" style="color: {% if task.complete %}white{% else %}#2980b9{% endif %}; background-color: {% if task.complete %}#2980b9{% else %}white{% endif %}"href="/list/{{category_id}}/task/{{task.id}}/complete?{{keyword}}&{{typesort}}">{% if task.complete %}COMPLETE{% else %}INCOMPLETE{% endif %}</a>
-            <a href="/list/{{category_id}}/task/{{task.id}}"
+            <a class="task-complete" style="color: {% if task.complete %}white{% else %}#2980b9{% endif %}; background-color: {% if task.complete %}#2980b9{% else %}white{% endif %}"href="/list/{{category_id}}/task/{{task.id}}/complete?keyword={{keyword}}&sort={{typesort}}">{% if task.complete %}COMPLETE{% else %}INCOMPLETE{% endif %}</a>
+            <a href="/list/{{category_id}}/task/{{task.id}}?keyword={{keyword}}&sort={{typesort}}"
               style="text-decoration-line: {% if task.complete %}line-through{% else %}none{% endif %}; color: black"
             >{{task.name}}</a>
           </div>
