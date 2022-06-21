@@ -1,8 +1,8 @@
 from asyncio import tasks
+import datetime
 from django.shortcuts import redirect, render, get_object_or_404
 from .models import Task, Category
 from .forms import TaskForm
-from datetime import date
 def index_view(request):
     return render(request, "index.html", {})
 
@@ -15,6 +15,9 @@ def list_view(request, category_id):
         tasks = tasks.filter(name__icontains = keyword)
     if category_id != 3:
         tasks = tasks.filter(category__id = category_id)
+        if category_id == 1:
+            dt = datetime.datetime.today()
+            tasks = tasks.filter(createdAt__contains = datetime.date(dt.year, dt.month, dt.day))
     tasks = tasks.filter(user=user)
     if sort=="1":
         tasks = tasks.order_by('name').values()
@@ -59,6 +62,9 @@ def detail_view(request, category_id, task_id):
         tasks = Task.objects.filter(name__icontains = keyword)
     if category_id != 3:
         tasks = tasks.filter(category__id = category_id)
+        if category_id == 1:
+            dt = datetime.datetime.now()
+            tasks = tasks.filter(createdAt__contains = datetime.date(dt.year, dt.month, dt.day))
     tasks = tasks.filter(user=user)
     if sort=="1":
         tasks = tasks.order_by('name').values()
