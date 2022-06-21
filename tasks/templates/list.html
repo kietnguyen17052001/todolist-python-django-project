@@ -8,9 +8,9 @@
         class="input-text-search"
         id="keyword"
         value="{{keyword|default:''}}"
+        placeholder="Enter task name..."
       />
       <input type="submit" class="input-submit-search" value="Search" />
-    </form>
   </div>
   <div class="main-list-task">
     <div class="category-task">
@@ -38,43 +38,71 @@
         <b style="color: #2980b9">{{count_complete}} complete</b> and
         <b style="color: #e74c3c">{{count_incomplete}} incomplete</b>
       </h2>
-      <a
-        class="sort-task-by-name"
-        style="
-          text-decoration: none;
-          float: right;
-          margin-right: 20px;
-          color: #2980b9;
-          border: 2px solid #2980b9;
-          border-radius: 5px;
-          padding: 2px 5px 2px 5px;
-        "
-        href="#"
-        >Sort <i class="fa fa-sort-alpha-asc" aria-hidden="true"></i
-      ></a>
+      <div style="
+        float: right;
+      ">
+        <select name="sort">
+          {% if typesort %}
+            {% if typesort == "0" %}
+            <option value=0 selected="selected">Defaul</option>
+            <option value=1>Sort by name</option>
+            <option value=2>Complete/Incomplete</option>
+            {%elif typesort == "1"%}
+            <option value=0>Defaul</option>
+            <option value=1 selected="selected">Sort by name</option>
+            <option value=2>Complete/Incomplete</option>
+            {%elif typesort == "2"%}
+            <option value=0>Defaul</option>
+            <option value=1>Sort by name</option>
+            <option value=2 selected="selected">Complete/Incomplete</option>
+            {%endif%}
+          {% else%}
+            <option value=0>Defaul</option>
+            <option value=1>Sort by name</option>
+            <option value=2>Complete/Incomplete</option>
+          {% endif %}
+          
+        </select>
+  
+        <input type="submit" value="Sort" style="margin-right: 20px;"/>
+      </form>
+      </div>
       <div>
         <div class="show-list">
           {% for task in tasks%}
           <div class="task">
             <form method="post">
               {% if task.complete %}
-              <input
-                class="task-status task-complete"
-                type="submit"
-                value="complete"
-              />
               <a
-                href="#"
+                href="/list/{{category_id}}/{{task.id}}/complete?{{keyword}}&{{typesort}}"
+                style="border: 1px solid #bbbbbb;
+                color: #6c6666;
+                font-style: none;
+                text-decoration: none;
+                padding: 7px 24px;
+                min-width: 140px;
+                text-align: center;"
+                >COMPLETE</a 
+              >
+              <a
+                href="/list/{{category_id}}/{{task.id}}"
                 style="text-decoration-line: line-through; color: black"
-                >{{task.name}}</a
+                >{{task.name}}</a 
               >
               {% else %}
-              <input
-                class="task-status task-incomplete"
-                type="submit"
-                value="incomplete"
-              />
-              <a href="#" style="text-decoration: none; color: black"
+              <a
+                href="/list/{{category_id}}/{{task.id}}/complete?{{keyword}}&{{typesort}}"
+                style="border: 1px solid #bbbbbb;
+                color: #6c6666;
+                font-style: none;
+                text-decoration: none;
+                padding: 7px 24px;
+                min-width: 140px;
+                text-align: center;"
+                >INCOMPLETE</a 
+              >
+              <a
+              <a href="/list/{{category_id}}/{{task.id}}" style="text-decoration: none; color: black"
                 >{{task.name}}</a
               >
               {% endif %}
@@ -92,7 +120,7 @@
         style="
           display: flex;
           align-items: center;
-          justify-content: flex-end;
+          justify-content: space-around;
           gap: 1rem;
         "
       >
@@ -119,6 +147,31 @@
           >Delete <i class="fa fa-trash-o" aria-hidden="true"></i
         ></a>
       </div>
+      {%if task%}
+        <div class="detail" style="margin-top: 30px">
+          <h4>ID</h4>
+          <input type="text" name='id' value="{{task.id}}" style="margin-bottom: 16px; width: 100%;" disabled="disabled">
+
+          <h4>Name</h4>
+          <input type="text" name='id' value="{{task.name}}" style="margin-bottom: 16px; width: 100%;">
+
+          <div style="display: flex; justify-content: space-between;  margin-bottom: 16px; align-items: center;">
+            <h4 style="display: inline-block;">Completed</h4>
+            {%if task.complete%}
+            <input type="checkbox" name="iscomplete" value="{{task.complete}}" checked style="width: 20px; height: 20px;">
+            {%else%}
+            <input type="checkbox" name="iscomplete" value="{{task.complete}}" style="width: 20px; height: 20px;">
+            {%endif%}
+          </div>
+          
+
+          <h4>CreateAt</h4>
+          <input type="text" name='id' value="{{task.createdAt}}" style="margin-bottom: 16px; width: 100%;"  disabled="disabled">
+
+          <h4>UpdateAt</h4>
+          <input type="text" name='id' value="{{task.updatedAt}}" style="margin-bottom: 16px; width: 100%;"  disabled="disabled">
+        </div>
+      {%endif%}
     </div>
   </div>
 </div>
